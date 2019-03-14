@@ -556,10 +556,16 @@ else:
     # VTK use?
     # ext_args['include_dirs'].append('/usr/include/vtk')
     # ext_args['include_dirs'].append('/usr/local/include/vtk')
+
     # pcl 1.7(Ubuntu)
     # ext_args['include_dirs'].append('/usr/include/vtk-5.8')
     # ext_args['library_dirs'].append('/usr/lib')
     # ext_args['libraries'].append('libvtk*.so')
+
+    # pcl 1.8 (Ubuntu) - adding this to fix pcl_visualization issue
+    ext_args['include_dirs'].append('/usr/include/vtk-6.3')
+    ext_args['library_dirs'].append('/usr/lib')
+
     # pcl 1.8.1(MacOSX)
     # ext_args['include_dirs'].append('/usr/local/include/vtk-8.0')
     # ext_args['library_dirs'].append('/usr/local/lib')
@@ -628,7 +634,7 @@ else:
                   ]
     elif pcl_version == '-1.8':
         module = [Extension("pcl._pcl", ["pcl/_pcl_180.pyx", "pcl/minipcl.cpp", "pcl/ProjectInliers.cpp"], language="c++", **ext_args),
-                  # Extension("pcl.pcl_visualization", ["pcl/pcl_visualization.pyx"], language="c++", **ext_args),
+                  Extension("pcl.pcl_visualization", ["pcl/pcl_visualization.pyx"], language="c++", **ext_args),
                   # Extension("pcl.pcl_grabber", ["pcl/pcl_grabber.pyx", "pcl/grabber_callback.cpp"], language="c++", **ext_args),
                   # debug
                   # gdb_debug=True,
@@ -638,7 +644,7 @@ else:
         sys.exit(1)
 
     listDlls=[]
-    data_files=None			
+    data_files=None         
 
 
 
